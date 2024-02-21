@@ -7,12 +7,15 @@ Propiedades: marca (String), modelo (String), capacidadCombustible (Float), comb
 repostar(cantidad: float)-> Float: Incrementa combustibleActual hasta el máximo de capacidadCombustible si no se pasa cantidad o si cantidad es 0 o negativa. Sino, incrementa en cantidad hasta llegar a capacidadCombustible. Devuelve la cantidad repostada.
 * */
 abstract class Vehiculo(val nombre: String,val marca:String, var modelo:String, capacidadCombustible:Float,  var combustibleActual:Float,var kilometrosActuales:Float){
-    var KM_LITROS_GAS= 10.0f //esto es una constante en minusculas
+
     val capacidadCombustible:Float = capacidadCombustible.redondear()
     init {
         combustibleActual = combustibleActual.redondear()
         require(capacidadCombustible < 0){"la capacidad del tanque no debe ser negativa"}
         require(combustibleActual <  0){"el nivel de combustible debe ser positivo"}
+    }
+    companion object{
+        var KM_LITROS_GAS= 10.0f //esto es una constante en minusculas
     }
     /*obtenerInformacion() -> String, Retorna los kilómetros que el vehículo puede recorrer con el combustible actual (suponemos que cada litro da para 10 km).*/
     open fun obtenerInformacion():String = "El $modelo puede recorrer ${combustibleActual * 10} kilometros mas"
