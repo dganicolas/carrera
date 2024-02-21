@@ -2,7 +2,7 @@
 condicionBritanica (Boolean): Propiedad de clase que indica si los automóviles están configurados para conducción británica (volante a la derecha) o no.
 Comportamiento Especializado:
 Comportamiento Adicional:
-cambiarCondicionBritanica(nuevaCondicion: Boolean): Método de clase que permite modificar la configuración de conducción británica para todos los automóviles.
+cambiarCondicionBritanica(nuevaCondicion: Boolean): Método de clase que permite modificar la configuración de conducción británica para todos los automóviles. e
 */
 class Automovil (nombre:String, marca:String, modelo:String,capacidadCombustible:Float,combustibleActual:Float,kilometrosActuales:Float, val esHibrido: Boolean) : Vehiculo(nombre, marca, modelo, capacidadCombustible,combustibleActual,kilometrosActuales) {
     val KM_Hibrido_Litros = 15.0f //esto es una constantes
