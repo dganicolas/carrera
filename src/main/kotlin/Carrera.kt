@@ -25,7 +25,7 @@ participantes: List<Vehiculo> - Una lista que contiene todos los vehículos part
 estadoCarrera: Boolean - Un indicador de si la carrera está en curso o ha finalizado.
 historialAcciones: MutableMap<String, MutableList<String>> - Un mapa para registrar el historial de acciones de cada vehículo. La clave es el nombre del vehículo y el valor es una lista de strings describiendo sus acciones.
 posiciones: MutableList<Pair<String, Int>> o MutableMap<String, Int> - Una lista o diccionario para mantener un registro de la posición y los kilómetros recorridos por cada vehículo. Cada elemento es un par donde el primer valor es el nombre del vehículo y el segundo su kilometraje acumulado.*/
-class Carrera (val nombreCarrera:String, val distanciaTotal: Float, val participantes: List<Vehiculo>, var estadoCarrera:  Boolean, var historialAcciones : MutableList<String>, var posiciones: MutableMap<String, Int>){
+class Carrera (val nombreCarrera:String, val distanciaTotal: Float, val participantes: List<Vehiculo>, var estadoCarrera:  Boolean, var historialAcciones : MutableMap<String, MutableList<String>>, var posiciones: MutableMap<String, Int>){
 
     init {
         require(distanciaTotal > 1000){"la carrera debe ser mayor o igual a 1000.00KM"}
