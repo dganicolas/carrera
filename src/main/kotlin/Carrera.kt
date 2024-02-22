@@ -38,14 +38,6 @@ class Carrera (val nombreCarrera:String, val distanciaTotal: Float, val particip
         val paradasRepostaje: Int,
         val historialAcciones: List<String>
     ){
-        override fun toString(): String {
-            return "hola"
-        }
-
-
-        fun registrarcombustible(combustible:Float){
-            historialAcciones.addLast("")
-        }
     }
 
 
@@ -55,6 +47,9 @@ class Carrera (val nombreCarrera:String, val distanciaTotal: Float, val particip
 
 
 fun comienzo(){
+    for (coches in participantes){
+        historialAcciones[coches.nombre] = emptyList<String>().toMutableList()
+    }
     println("*** Gran Carrera de ${nombreCarrera}\n")
     println(message = 8.toString())
 }
@@ -67,16 +62,17 @@ fun iniciarCarrera(){
     do {
         var vehiculo= participantes[Random(0).nextInt(participantes.size)]
         avanzarVehiculo(vehiculo)
+        actualizarPosiciones()
         determinarGanador()
     }while(estadoCarrera != false)
-    actualizarPosiciones()
+
     obtenerResultados()
 }
 
 /*avanzarVehiculo(vehiculo: Vehiculo): Identificado el vehículo, le hace avanzar una distancia aleatoria entre 10 y 200 km. Si el vehículo necesita repostar, se llama al método repostarVehiculo() antes de que pueda continuar. Este método llama a realizar filigranas.*/
 fun avanzarVehiculo(vehiculo: Vehiculo){
     var kilometrosAAvanzar = Random(1000).nextInt(20000).toFloat()/100
-    iniciarCarrera()
+    registrarAccion(vehiculo.nombre, "Inicia viaje: A recorrer $kilometrosAAvanzar ${vehiculo.kilometrosActuales} kms y ${vehiculo.combustibleActual} L actuales.")
     do {
         if (kilometrosAAvanzar > KILOMETROS_POR_TURNOS){
             kilometrosAAvanzar -= KILOMETROS_POR_TURNOS
@@ -86,6 +82,7 @@ fun avanzarVehiculo(vehiculo: Vehiculo){
                 repostarVehiculo(vehiculo,0.0f)
                 vehiculo.realizaViaje(KILOMETROS_POR_TURNOS)
             }
+            registrarAccion(vehiculo.nombre, "Avance tramo: Recorrido $kilometrosAAvanzar kms.")
             realizarFiligrana(vehiculo)
 
         }else{
@@ -95,28 +92,37 @@ fun avanzarVehiculo(vehiculo: Vehiculo){
                 repostarVehiculo(vehiculo,0.0f)
                 vehiculo.realizaViaje(kilometrosAAvanzar)
             }
+            registrarAccion(vehiculo.nombre, "Avance tramo: Recorrido $kilometrosAAvanzar kms.")
         }
     }while (kilometrosAAvanzar != 0.0f)
-
+    registrarAccion(vehiculo.nombre, "Finaliza viaje: Total Recorrido")
 }
 
 /*repostarVehiculo(vehiculo: Vehiculo, cantidad: Float): Reposta el vehículo seleccionado, incrementando su combustibleActual y registrando la acción en historialAcciones.*/
 fun repostarVehiculo(vehiculo: Vehiculo, cantidad: Float = 0.0f){
-    historialAcciones.add((vehiculo.repostar(cantidad)).toString())
+    vehiculo.paradas ++
+    registrarAccion(vehiculo.nombre, "Respotaje tramo: ${vehiculo.repostar(cantidad)} L.")
 }
 
 /*realizarFiligrana(vehiculo: Vehiculo): Determina aleatoriamente si un vehículo realiza una filigrana (derrape o caballito) y registra la acción.*/
 fun realizarFiligrana(vehiculo: Vehiculo){
-    when(vehiculo){
-        is Automovil -> historialAcciones.add(vehiculo.realizaDerrape().toString())
-        is Motocicleta -> historialAcciones.add(vehiculo.realizaCaballito().toString())
+    val numero = Random(0).nextInt(100)
+    if (numero > 50){
+        for( i in 1..Random(1).nextInt(2)){
+        when(vehiculo){
+        is Automovil -> registrarAccion(vehiculo.nombre, "Caballito: Combustible restante ${vehiculo.realizaDerrape()}  L.")
+        is Motocicleta -> registrarAccion(vehiculo.nombre, "Caballito: Combustible restante ${vehiculo.realizaCaballito()}  L.")
+    }}}
+}
+/*registrarAccion(vehiculo: String, accion: String): Añade una acción al historialAcciones del vehículo especificado.*/
+    fun registrarAccion(vehiculo: String, accion: String){
+     historialAcciones[vehiculo]?.add(accion)
     }
-}
-
 /*actualizarPosiciones(): Actualiza posiciones con los kilómetros recorridos por cada vehículo después de cada iteración, manteniendo un seguimiento de la competencia.*/
-fun actualizarPosiciones(){
+    fun actualizarPosiciones(){
     participantes.forEach{ posiciones[it.nombre] = it.kilometrosActuales.toInt()}
-}
+    participantes.sortedBy { it.kilometrosActuales }
+    }
 
 /*determinarGanador(): Revisa posiciones para identificar al vehículo (o vehículos) que haya alcanzado o superado la distanciaTotal, estableciendo el estado de la carrera a finalizado y determinando el ganador.*/
 fun determinarGanador(){
@@ -130,8 +136,19 @@ fun determinarGanador(){
 /*obtenerResultados(): Devuelve una clasificación final de los vehículos, cada elemento tendrá el nombre del vehiculo, posición ocupada, la distancia total recorrida, el número de paradas para repostar y el historial de acciones. La collección estará ordenada por la posición ocupada.*/
 fun obtenerResultados(){
     var puesto=1
-    for (coches in posiciones){
-        println("el $puesto puesto: ${coches.key} con ${coches.value} KM")
+    println("¡Carrera finalizada!\n")
+    println("¡¡¡ENHORABUENA ${participantes.maxBy { it.kilometrosActuales }}!!!\n")
+    println("* Clasificación:")
+    for (coches in participantes){
+        println("$puesto -> ${coches.nombre} (${coches.kilometrosActuales})")
+        puesto++
+    }
+    puesto = 1
+    var listafinal = emptyList<ResultadoCarrera>().toMutableList()
+    for (i in participantes){
+
+        listafinal.add(ResultadoCarrera(i,puesto,i.kilometrosActuales, i.paradas, historialAcciones[i.nombre] ?: emptyList()))
+        puesto++
     }
 }
 }

@@ -6,7 +6,7 @@ Propiedades: marca (String), modelo (String), capacidadCombustible (Float), comb
 
 repostar(cantidad: float)-> Float: Incrementa combustibleActual hasta el máximo de capacidadCombustible si no se pasa cantidad o si cantidad es 0 o negativa. Sino, incrementa en cantidad hasta llegar a capacidadCombustible. Devuelve la cantidad repostada.
 * */
-abstract class Vehiculo(nombre: String,val marca:String, var modelo:String, capacidadCombustible:Float,  var combustibleActual:Float,var kilometrosActuales:Float){
+abstract class Vehiculo(nombre: String,val marca:String, var modelo:String, capacidadCombustible:Float,  var combustibleActual:Float,var kilometrosActuales:Float, var paradas: Int = 0){
 
     val capacidadCombustible:Float = capacidadCombustible.redondear()
     val nombre = nombre.trim().lowercase()
