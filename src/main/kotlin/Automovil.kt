@@ -8,7 +8,7 @@ class Automovil (nombre:String, marca:String, modelo:String,capacidadCombustible
 
 
     companion object {
-        val KM_Hibrido_Litros = 15.0f //esto es una constantes
+        val KM_HIBRIDOS_LITROS = 15.0f //esto es una constantes
         val DERRAPE = 7.5F
         val DERRAPE_HIBRIDO = 6.25F
         //preguntar a diego NOCEH
@@ -23,7 +23,7 @@ class Automovil (nombre:String, marca:String, modelo:String,capacidadCombustible
         return if (!esHibrido) {
             super.obtenerInformacion()
         } else {
-            "El $modelo puede recorrer ${combustibleActual * KM_Hibrido_Litros} kilometros mas"
+            "El $modelo puede recorrer ${combustibleActual * KM_HIBRIDOS_LITROS} kilometros mas"
         }
     }//esta funcion funciona
 
@@ -33,7 +33,7 @@ class Automovil (nombre:String, marca:String, modelo:String,capacidadCombustible
         return if (!esHibrido) {
             super.calcularAutonomia()
         } else {
-            return (combustibleActual * KM_Hibrido_Litros)
+            return (combustibleActual * KM_HIBRIDOS_LITROS)
         }
     }//esta funcion funciona
 
@@ -44,11 +44,11 @@ class Automovil (nombre:String, marca:String, modelo:String,capacidadCombustible
         } else {
             if (distancia < calcularAutonomia()) { //comprueba que tiene el combustible necesario para el viaje
                 kilometrosActuales += distancia
-                combustibleActual -= distancia / KM_Hibrido_Litros
+                combustibleActual -= distancia / KM_HIBRIDOS_LITROS
                 combustibleActual = combustibleActual.redondear()
                 return kilometrosActuales
             } else {//el nivel de combustible es bajo y procede a viajar hasta que el combustible quede a 0
-                kilometrosActuales += (combustibleActual * KM_Hibrido_Litros)
+                kilometrosActuales += (combustibleActual * KM_HIBRIDOS_LITROS)
                 combustibleActual = 0.0F
                 //lo pongo to-do a dos decimales
                 combustibleActual = combustibleActual.redondear()
@@ -59,8 +59,8 @@ class Automovil (nombre:String, marca:String, modelo:String,capacidadCombustible
     /*realizaDerrape()-> Float: método que simula un derrape. Realiza una gasto adicional en el combustible, retornando el combustible restante. El gasto equivale a haber realizado 7,5 km o 6,25 km si es híbrido.*/
     open fun realizaDerrape():Float{
         return if (esHibrido){
-            combustibleActual -= DERRAPE_HIBRIDO / KM_Hibrido_Litros
-            (DERRAPE_HIBRIDO / KM_Hibrido_Litros)
+            combustibleActual -= DERRAPE_HIBRIDO / KM_HIBRIDOS_LITROS
+            (DERRAPE_HIBRIDO / KM_HIBRIDOS_LITROS)
         }else{
             combustibleActual -= DERRAPE/KM_LITROS_GAS
             (DERRAPE/KM_LITROS_GAS)

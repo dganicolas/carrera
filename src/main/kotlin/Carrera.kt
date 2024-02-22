@@ -41,15 +41,20 @@ class Carrera (val nombreCarrera:String, val distanciaTotal: Float, val particip
 /*iniciarCarrera(): Inicia la carrera, estableciendo estadoCarrera a true y comenzando el ciclo de iteraciones donde los vehículos avanzan y realizan acciones.*/
 fun iniciarCarrera(){
     this.estadoCarrera = true
+    participantes.forEach{ it.kilometrosActuales = 0.0f}
+    actualizarPosiciones()
     do {
-        var vehiculo= participantes
-        //aqui va toda la carrera
-    }while()
+        var vehiculo= participantes[Random(0).nextInt(participantes.size)]
+        avanzarVehiculo(vehiculo)
+        determinarGanador()
+    }while(estadoCarrera != false)
+    obtenerResultados()
 }
 
 /*avanzarVehiculo(vehiculo: Vehiculo): Identificado el vehículo, le hace avanzar una distancia aleatoria entre 10 y 200 km. Si el vehículo necesita repostar, se llama al método repostarVehiculo() antes de que pueda continuar. Este método llama a realizar filigranas.*/
 fun avanzarVehiculo(vehiculo: Vehiculo){
     var kilometrosAAvanzar = Random(1000).nextInt(20000).toFloat()/100
+    iniciarCarrera()
     do {
         if (kilometrosAAvanzar > KILOMETROS_POR_TURNOS){
             kilometrosAAvanzar -= KILOMETROS_POR_TURNOS
@@ -69,13 +74,13 @@ fun avanzarVehiculo(vehiculo: Vehiculo){
                 vehiculo.realizaViaje(kilometrosAAvanzar)
             }
         }
-    }while (kilometrosAAvanzar == 0.0f)
+    }while (kilometrosAAvanzar != 0.0f)
 
 }
 
 /*repostarVehiculo(vehiculo: Vehiculo, cantidad: Float): Reposta el vehículo seleccionado, incrementando su combustibleActual y registrando la acción en historialAcciones.*/
-fun repostarVehiculo(vehiculo: Vehiculo, cantidad: Float){
-    historialAcciones.add((vehiculo.repostar()).toString())
+fun repostarVehiculo(vehiculo: Vehiculo, cantidad: Float = 0.0f){
+    historialAcciones.add((vehiculo.repostar(cantidad)).toString())
 
 }
 
@@ -89,16 +94,23 @@ fun realizarFiligrana(vehiculo: Vehiculo){
 
 /*actualizarPosiciones(): Actualiza posiciones con los kilómetros recorridos por cada vehículo después de cada iteración, manteniendo un seguimiento de la competencia.*/
 fun actualizarPosiciones(){
-
+    participantes.forEach{ posiciones[it.nombre] = it.kilometrosActuales.toInt()}
 }
 
 /*determinarGanador(): Revisa posiciones para identificar al vehículo (o vehículos) que haya alcanzado o superado la distanciaTotal, estableciendo el estado de la carrera a finalizado y determinando el ganador.*/
 fun determinarGanador(){
-
+    for (coches in posiciones){
+        if (coches.value >= distanciaTotal){
+            estadoCarrera = false
+        }
+    }
 }
 
 /*obtenerResultados(): Devuelve una clasificación final de los vehículos, cada elemento tendrá el nombre del vehiculo, posición ocupada, la distancia total recorrida, el número de paradas para repostar y el historial de acciones. La collección estará ordenada por la posición ocupada.*/
 fun obtenerResultados(){
-
+    var puesto=1
+    for (coches in posiciones){
+        println("el $puesto puesto: ${coches.key} con ${coches.value} KM")
+    }
 }
 }
