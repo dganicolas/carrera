@@ -15,8 +15,8 @@ abstract class Vehiculo(nombre: String,val marca:String, var modelo:String, capa
     init {
         kilometrosActuales = 0.0f
         combustibleActual = combustibleActual.redondear()
-        require(capacidadCombustible < 0){"la capacidad del tanque no debe ser negativa"}
-        require(combustibleActual <  0){"el nivel de combustible debe ser positivo"}
+        require(capacidadCombustible > 0){"la capacidad del tanque no debe ser negativa"}
+        require(combustibleActual >  0){"el nivel de combustible debe ser positivo"}
         require(!nombreEstaRepetido(this.nombre)){"ese nombre ya existe ${this.nombre}"}
     }
 

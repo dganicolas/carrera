@@ -8,7 +8,7 @@ Comportamiento Adicional:
 realizaCaballito()-> Float: realiza una gasto adicional en el combustible, retornando el combustible restante. El gasto equivale a haber realizado 6,5 kilómetros.*/
 class Motocicleta   (nombre:String,marca:String, modelo:String,capacidadCombustible:Float,combustibleActual:Float,kilometrosActuales:Float, var cilindrada: Int) : Vehiculo(nombre, marca, modelo, capacidadCombustible,combustibleActual,kilometrosActuales)  {
     init {
-        require(cilindrada < 125 || cilindrada > 1000){"ERROR las cilindradas deben estar enter 125 a 10000 cc"}
+        require(cilindrada > 125 || cilindrada < 1000){"ERROR las cilindradas deben estar enter 125 a 10000 cc"}
     }
 
 

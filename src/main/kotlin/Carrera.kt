@@ -28,7 +28,24 @@ posiciones: MutableList<Pair<String, Int>> o MutableMap<String, Int> - Una lista
 class Carrera (val nombreCarrera:String, val distanciaTotal: Float, val participantes: List<Vehiculo>, var estadoCarrera:  Boolean, var historialAcciones : MutableList<String>, var posiciones: MutableMap<String, Int>){
 
     init {
-        require(distanciaTotal < 1000){"la carrera debe ser mayor o igual a 1000.00KM"}
+        require(distanciaTotal > 1000){"la carrera debe ser mayor o igual a 1000.00KM"}
+    }
+
+    data class ResultadoCarrera(
+        val vehiculo: Vehiculo,
+        val posicion: Int,
+        val kilometraje: Float,
+        val paradasRepostaje: Int,
+        val historialAcciones: List<String>
+    ){
+        override fun toString(): String {
+            return "hola"
+        }
+
+
+        fun registrarcombustible(combustible:Float){
+            historialAcciones.addLast("")
+        }
     }
 
 
@@ -37,9 +54,13 @@ class Carrera (val nombreCarrera:String, val distanciaTotal: Float, val particip
     }
 
 
-
+fun comienzo(){
+    println("*** Gran Carrera de ${nombreCarrera}\n")
+    println(message = 8.toString())
+}
 /*iniciarCarrera(): Inicia la carrera, estableciendo estadoCarrera a true y comenzando el ciclo de iteraciones donde los vehículos avanzan y realizan acciones.*/
 fun iniciarCarrera(){
+    comienzo()
     this.estadoCarrera = true
     participantes.forEach{ it.kilometrosActuales = 0.0f}
     actualizarPosiciones()
@@ -48,6 +69,7 @@ fun iniciarCarrera(){
         avanzarVehiculo(vehiculo)
         determinarGanador()
     }while(estadoCarrera != false)
+    actualizarPosiciones()
     obtenerResultados()
 }
 
@@ -81,7 +103,6 @@ fun avanzarVehiculo(vehiculo: Vehiculo){
 /*repostarVehiculo(vehiculo: Vehiculo, cantidad: Float): Reposta el vehículo seleccionado, incrementando su combustibleActual y registrando la acción en historialAcciones.*/
 fun repostarVehiculo(vehiculo: Vehiculo, cantidad: Float = 0.0f){
     historialAcciones.add((vehiculo.repostar(cantidad)).toString())
-
 }
 
 /*realizarFiligrana(vehiculo: Vehiculo): Determina aleatoriamente si un vehículo realiza una filigrana (derrape o caballito) y registra la acción.*/
