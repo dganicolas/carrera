@@ -112,7 +112,7 @@ fun repostarVehiculo(vehiculo: Vehiculo, cantidad: Float = 0.0f){
 /*realizarFiligrana(vehiculo: Vehiculo): Determina  aleatoriamente si un vehículo realiza una filigrana (derrape o caballito) y registra la acción.*/
 fun realizarFiligrana(vehiculo: Vehiculo){
         val ran= mutableListOf(1,2).random()
-        for( i in 1..ran){//lo quiero poner ramdon entre 1 o 2 ??
+        for( i in 1..ran){
         when(vehiculo){
         is Automovil -> registrarAccion(vehiculo.nombre, "Derrape: Combustible restante ${vehiculo.realizaDerrape()}  L.")
         is Motocicleta -> registrarAccion(vehiculo.nombre, "Caballito: Combustible restante ${vehiculo.realizaCaballito()}  L.")
