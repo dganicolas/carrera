@@ -29,6 +29,7 @@ class Motocicleta   (nombre:String,marca:String, modelo:String,capacidadCombusti
         if (distancia < calcularAutonomia()) { //comprueba que tiene el combustible necesario para el viaje
             kilometrosActuales += distancia.redondear()
             combustibleActual -= (distancia / calcular_kilometros_con_un_litro()).redondear()
+            combustibleActual = combustibleActual.redondear()
             return kilometrosActuales
         }else{//el nivel de combustible es bajo y procede a viajar hasta que el combustible quede a 0
             kilometrosActuales += calcularAutonomia()

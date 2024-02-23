@@ -41,6 +41,7 @@ abstract class Vehiculo(nombre: String,val marca:String, var modelo:String, capa
         if (distancia < calcularAutonomia()) { //comprueba que tiene el combustible necesario para el viaje
             kilometrosActuales += distancia.redondear()
             combustibleActual -= (distancia / KM_LITROS_GAS).redondear()
+            combustibleActual = combustibleActual.redondear()
             return kilometrosActuales
         }else{//el nivel de combustible es bajo y procede a viajar hasta que el combustible quede a 0
             kilometrosActuales += (combustibleActual * KM_LITROS_GAS).redondear()
@@ -63,4 +64,6 @@ abstract class Vehiculo(nombre: String,val marca:String, var modelo:String, capa
         }
 
     }
+
+    override fun toString() = nombre
 }

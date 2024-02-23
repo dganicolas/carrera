@@ -45,15 +45,13 @@ class Automovil (nombre:String, marca:String, modelo:String,capacidadCombustible
 
             if (distancia < calcularAutonomia()) { //comprueba que tiene el combustible necesario para el viaje
                 kilometrosActuales += distancia
-                combustibleActual -= distancia / KM_HIBRIDOS_LITROS
+                combustibleActual -= (distancia / KM_HIBRIDOS_LITROS).redondear()
                 combustibleActual = combustibleActual.redondear()
                 return kilometrosActuales
             } else
             {//el nivel de combustible es bajo y procede a viajar hasta que el combustible quede a 0
                 kilometrosActuales += (combustibleActual * KM_HIBRIDOS_LITROS)
                 combustibleActual = 0.0F
-                //lo pongo to-do a dos decimales
-                combustibleActual = combustibleActual.redondear()
                 return kilometrosActuales
             }
         }

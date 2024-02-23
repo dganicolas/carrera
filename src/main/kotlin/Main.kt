@@ -10,6 +10,6 @@ fun main(args: Array<String>) {
     val dinamo = Automovil("Dinamo", "Cintroen", "Sor", 70f, 70f * 0.1f, 0f, true) // Camioneta eléctrica con capacidad de 70 litros, inicia con el 10%
     val eclipse = Automovil("Eclipse", "Renault", "Espacio", 60f, 60f * 0.1f, 0f, false) // Coupé deportivo con capacidad de 60 litros, inicia con el 10%
     val fenix = Motocicleta("Fénix", "Honda", "Vital", 20f, 20f * 0.1f, 0f, 250) // Motocicleta eléctrica con capacidad de 20 litros, inicia con el 10%
-    val carrera = Carrera("filigrana", 10000.0f, listOf(aurora,boreal,cefiro,dinamo,eclipse,fenix),estadoCarrera = true, arrayListOf(), mutableMapOf())
-    carrera.comienzo()
+    val carrera = Carrera("filigrana", 1000.0f, listOf(aurora,boreal,cefiro,dinamo,eclipse,fenix))
+    carrera.iniciarCarrera()
 }
