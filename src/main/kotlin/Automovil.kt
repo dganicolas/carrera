@@ -56,14 +56,14 @@ class Automovil (nombre:String, marca:String, modelo:String,capacidadCombustible
             }
         }
     }//CREO QUE FUNCIONA
-    /*realizaDerrape()-> Float: método que simula un derrape. Realiza una gasto adicional en el combustible, retornando el combustible restante. El gasto equivale a haber realizado 7,5 km o 6,25 km si es híbrido.*/
+    /*realizaDerrape()-> Float: método que simula un derrape. Realiza una gasto adicional en el combustible, retornando  el combustible restante. El gasto equivale a haber realizado 7,5 km o 6,25 km si es híbrido.*/
     open fun realizaDerrape():Float{
         return if (esHibrido){
-            combustibleActual -= DERRAPE_HIBRIDO / KM_HIBRIDOS_LITROS
-            (DERRAPE_HIBRIDO / KM_HIBRIDOS_LITROS)
+            combustibleActual -= (DERRAPE_HIBRIDO / KM_HIBRIDOS_LITROS).redondear()
+            (combustibleActual.redondear())
         }else{
-            combustibleActual -= DERRAPE/KM_LITROS_GAS
-            (DERRAPE/KM_LITROS_GAS)
+            combustibleActual -= (DERRAPE/KM_LITROS_GAS).redondear()
+            (combustibleActual.redondear())
         }
     }
 
